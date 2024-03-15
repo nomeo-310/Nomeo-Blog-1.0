@@ -1,0 +1,98 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { HiOutlineDocumentText } from "react-icons/hi2";
+import { BsSearch, BsBell } from "react-icons/bs";
+import { User } from "@prisma/client";
+import ImageAvatar from "../common/ImageAvatar";
+import UserNavigation from "../common/UserNavigation";
+
+interface navBarProps {
+  currentUser: User | null;
+}
+
+const Navbar = ({ currentUser }: navBarProps) => {
+  const [showSearchBar, setShowSearchBar] = React.useState(false);
+  const [showUserNavbar, setShowUserNavBar] = React.useState(false);
+
+  const notificationAvailable = false;
+
+  const toggleUserNavBar = React.useCallback(() => {
+    setShowUserNavBar((prev) => !prev);
+  }, []);
+
+  const handleOnBlur = React.useCallback(() => {
+    setTimeout(() => {
+      setShowUserNavBar(false);
+    }, 200);
+  }, []);
+
+  return (
+    <nav className="navbar">
+      <Link className="w-9 h-9 md:h-10 md:w-10 relative" href="/">
+        <Image src="/images/logo.png" alt="logo" fill />
+      </Link>
+
+      <div
+        className={
+          "absolute bg-white w-full left-0 top-full mt-0.5 border-b border-gray py-4 px-[5vw] md:relative md:inset-0 md:border-0 md:block md:p-0 md:w-auto md:show " +
+          (showSearchBar ? "show" : "hide")
+        }
+      >
+        <input
+          type="text"
+          placeholder="Search"
+          className="w-full md:w-auto bg-grey p-4 pl-6 pr-[12%] md:pr-6 rounded-full placeholder:text-dark-grey md:pl-12"
+        />
+        <BsSearch className="absolute right-[10%] md:pointer-events-none md:left-5 top-1/2 -translate-y-1/2 text-xl text-dark-grey" />
+      </div>
+
+      <div className="flex items-center gap-3 md:gap-6 ml-auto">
+        <button
+          className="md:hidden w-12 h-12 flex items-center justify-center rounded-full bg-grey"
+          onClick={() => setShowSearchBar((prevState) => !prevState)}
+        >
+          <BsSearch className="text-xl text-dark-grey" />
+        </button>
+
+        <Link href="/editor" className="hidden md:flex gap-2 link rounded-full">
+          <HiOutlineDocumentText className="text-xl" />
+          <p>Write</p>
+        </Link>
+        {currentUser ? (
+          <>
+            <Link href="/dashboard/notification">
+              <button className="w-12 h-12 rounded-full bg-grey relative hover:bg-black/20 flex items-center justify-center">
+                <BsBell size={22} />
+                {notificationAvailable && (
+                  <span className="absolute top-1 right-0 block bg-red w-[13px] h-[13px] rounded-full" />
+                )}
+              </button>
+            </Link>
+            <div
+              className="relative"
+              onClick={toggleUserNavBar}
+              onBlur={handleOnBlur}
+            >
+              <ImageAvatar image={currentUser.image || ""} />
+              {showUserNavbar && <UserNavigation currentUser={currentUser} />}
+            </div>
+          </>
+        ) : (
+          <>
+            <Link href="/sign-in" className="btn-dark py-2">
+              Sign In
+            </Link>
+            <Link href="/sign-up" className="btn-light py-2 hidden md:block">
+              Sign Up
+            </Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
