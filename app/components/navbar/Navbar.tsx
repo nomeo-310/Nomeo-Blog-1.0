@@ -7,7 +7,7 @@ import { HiOutlineDocumentText } from "react-icons/hi2";
 import { BsSearch, BsBell } from "react-icons/bs";
 import { User } from "@prisma/client";
 import ImageAvatar from "../common/ImageAvatar";
-import UserNavigation from "../common/UserNavigation";
+import UserNavigation from "./UserNavigation";
 
 interface navBarProps {
   currentUser: User | null;

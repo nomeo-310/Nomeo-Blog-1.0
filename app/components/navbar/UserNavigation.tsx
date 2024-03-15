@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import AnimationWrapper from "./AnimationWrapper";
+import AnimationWrapper from "../common/AnimationWrapper";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import { BsPerson, BsGrid1X2, BsGear, BsBoxArrowInRight } from "react-icons/bs";
 import { User } from "@prisma/client";
@@ -46,7 +46,9 @@ const UserNavigation = ({ currentUser }: Props) => {
         >
           <BsBoxArrowInRight className="text-2xl" />
           <p className="text-lg">
-            {currentUser?.username ? "@" + currentUser.username : currentUser?.name}
+            {currentUser?.username
+              ? "@" + currentUser.username
+              : currentUser?.name}
           </p>
         </button>
       </div>
