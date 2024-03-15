@@ -3,9 +3,9 @@ import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import Credentials from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
-import { loginUserValidation } from '@/app/lib/validationSchemas'
-import { prismaClient } from '@/app/lib/connectDatabase'
-import { getUserByEmail } from '@/app/actions/data.action'
+import { loginUserValidation } from '@/libs/utils/validationSchemas'
+import { prismaClient } from '@/libs/utils/connectDatabase'
+import { getUserByEmail } from '@/libs/actions/data.action'
 
 export const authOptions:AuthOptions = {
   adapter: PrismaAdapter(prismaClient) as any,

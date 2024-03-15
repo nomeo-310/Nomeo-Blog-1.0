@@ -1,9 +1,9 @@
 'use server'
 
 import * as z from 'zod'
-import { createUserValidation } from "../lib/validationSchemas"
+import { createUserValidation } from "../utils/validationSchemas"
 import bcrypt from 'bcryptjs'
-import {prismaClient} from '@/app/lib/connectDatabase'
+import {prismaClient} from '@/libs/utils/connectDatabase'
 import { getUserByEmail } from './data.action'
 
 

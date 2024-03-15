@@ -1,7 +1,7 @@
 'use server'
 
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import { prismaClient } from "../lib/connectDatabase";
+import { authOptions } from "../../app/api/auth/[...nextauth]/authOptions";
+import { prismaClient } from "../utils/connectDatabase";
 import { getServerSession } from "next-auth";
 
 export const getUserByEmail = async(email:string) => {

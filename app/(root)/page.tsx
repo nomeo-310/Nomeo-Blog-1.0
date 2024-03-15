@@ -1,4 +1,4 @@
-import MainNavigation from "../components/navbar/Navigation";
+import MainNavigation from "@/app/app-components/Navigation";
 
 export default async function Home() {
   return (

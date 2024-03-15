@@ -8,6 +8,7 @@ import { BsSearch, BsBell } from "react-icons/bs";
 import { User } from "@prisma/client";
 import ImageAvatar from "../common/ImageAvatar";
 import UserNavigation from "./UserNavigation";
+import Logo from "../common/Logo";
 
 interface navBarProps {
   currentUser: User | null;
@@ -23,6 +24,10 @@ const Navbar = ({ currentUser }: navBarProps) => {
     setShowUserNavBar((prev) => !prev);
   }, []);
 
+  const toggleSearchBar = React.useCallback(() => {
+    setShowSearchBar((prev) => !prev);
+  }, []);
+
   const handleOnBlur = React.useCallback(() => {
     setTimeout(() => {
       setShowUserNavBar(false);
@@ -31,9 +36,7 @@ const Navbar = ({ currentUser }: navBarProps) => {
 
   return (
     <nav className="navbar">
-      <Link className="w-9 h-9 md:h-10 md:w-10 relative" href="/">
-        <Image src="/images/logo.png" alt="logo" fill />
-      </Link>
+      <Logo />
 
       <div
         className={
@@ -52,7 +55,7 @@ const Navbar = ({ currentUser }: navBarProps) => {
       <div className="flex items-center gap-3 md:gap-6 ml-auto">
         <button
           className="md:hidden w-12 h-12 flex items-center justify-center rounded-full bg-grey"
-          onClick={() => setShowSearchBar((prevState) => !prevState)}
+          onClick={toggleSearchBar}
         >
           <BsSearch className="text-xl text-dark-grey" />
         </button>
@@ -81,14 +84,14 @@ const Navbar = ({ currentUser }: navBarProps) => {
             </div>
           </>
         ) : (
-          <>
+          <React.Fragment>
             <Link href="/sign-in" className="btn-dark py-2">
               Sign In
             </Link>
             <Link href="/sign-up" className="btn-light py-2 hidden md:block">
               Sign Up
             </Link>
-          </>
+          </React.Fragment>
         )}
       </div>
     </nav>

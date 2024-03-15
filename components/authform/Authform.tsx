@@ -6,30 +6,25 @@ import { useRouter } from "next/navigation";
 import { BsPerson, BsEnvelope, BsKey } from "react-icons/bs";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserValidation, loginUserValidation } from "@/app/lib/validationSchemas";
+import { createUserValidation,loginUserValidation } from "@/libs/utils/validationSchemas";
 import Image from "next/image";
 import Link from "next/link";
 import AnimationWrapper from "../common/AnimationWrapper";
-import { createUser } from "@/app/actions/user.action";
-import { userProps } from "@/app/types/types";
+import { createUser } from "@/libs/actions/user.action";
+import { userProps } from "@/types/types";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
-
 
 interface authFormProps {
   type: "login" | "register";
 }
 
-const Authform = ({ type}: authFormProps) => {
+const Authform = ({ type }: authFormProps) => {
   const router = useRouter();
 
   const authFormDefaultData = { email: "", password: "", fullname: "" };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const { register, handleSubmit, formState: { errors }} = useForm<FieldValues>({
     resolver: zodResolver(
       type === "register" ? createUserValidation : loginUserValidation
     ),
@@ -52,20 +47,18 @@ const Authform = ({ type}: authFormProps) => {
       }
     }
 
-    if (type === 'login') {
-      signIn('credentials', {...data, redirect: false})
-      .then((callback) => {
-
+    if (type === "login") {
+      signIn("credentials", { ...data, redirect: false }).then((callback) => {
         if (callback?.ok) {
-          toast.success('Succesfull Logged In');
+          toast.success("Succesfull Logged In");
           router.refresh();
-          router.push('/')
+          router.push("/");
         }
 
         if (callback?.error) {
-          toast.error(callback.error)
+          toast.error(callback.error);
         }
-      })
+      });
     }
   };
 
@@ -85,7 +78,7 @@ const Authform = ({ type}: authFormProps) => {
             {type === "login" ? "Welcome back!" : "Create account"}
           </h1>
 
-          {type === "register" && (
+          { type === "register" && (
             <Input
               type="text"
               placeholder="Full Name"

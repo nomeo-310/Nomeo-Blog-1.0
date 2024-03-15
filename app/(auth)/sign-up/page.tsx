@@ -1,5 +1,5 @@
-import { getSession } from "@/app/actions/data.action";
-import Authform from "@/app/components/authform/Authform";
+import { getSession } from "@/libs/actions/data.action";
+import Authform from "@/components/authform/Authform";
 import { redirect } from "next/navigation";
 import React from "react";
 

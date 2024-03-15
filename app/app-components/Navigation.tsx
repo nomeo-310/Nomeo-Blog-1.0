@@ -1,10 +1,8 @@
-import { getCurrentUser } from "@/app/actions/data.action";
+import { getCurrentUser } from "@/libs/actions/data.action";
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../../components/navbar/Navbar";
 
-interface Props {}
-
-const MainNavigation = async (props: Props) => {
+const MainNavigation = async () => {
   const currentUser = await getCurrentUser();
   return (
     <React.Fragment>
