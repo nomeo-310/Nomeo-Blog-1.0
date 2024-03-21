@@ -3,8 +3,10 @@
 import * as z from 'zod'
 import { createUserValidation } from "../utils/validationSchemas"
 import bcrypt from 'bcryptjs'
-import {prismaClient} from '@/libs/utils/connectDatabase'
-import { getUserByEmail } from './data.action'
+import User from '../models/User'
+import connectToDatabase from '../utils/connectDatabase'
+import { getUserByEmail, getUserByUsername } from './data.action'
+import { usernameGenerator } from '@/hooks/usernameGenerator'
 
 
 export const createUser = async (values:z.infer<typeof createUserValidation>) => {
@@ -18,13 +20,26 @@ export const createUser = async (values:z.infer<typeof createUserValidation>) =>
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingUser = await getUserByEmail(email)
+  let username = usernameGenerator(email);
+
+  const existingUsername = await getUserByUsername(username)
 
   if (existingUser) {
     return {error: 'Email already in use'}
   }
 
-  await prismaClient.user.create({data: {email, name:fullname, hashedPassword}})
-  return {success: 'User successfully created'}
+  if (existingUsername) {
+    return username = usernameGenerator(email);
+  }
+
+  try {
+    connectToDatabase();
+    const user = await User.create({email, name:fullname, hashedPassword, username})
+    user.save();
+    return {success: 'User successfully created'}
+  } catch (error) {
+    return {error: 'Internal server error'}
+  }
 }
 
 

@@ -7,7 +7,7 @@ import React from "react";
 const Logo = () => {
   return (
     <Link className="w-9 h-9 md:h-10 md:w-10 relative" href="/">
-      <Image src="/images/logo.png" alt="logo" fill />
+      <Image src="/images/logo.png" alt="logo" fill className="w-fit"/>
     </Link>
   );
 };

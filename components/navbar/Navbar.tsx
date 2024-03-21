@@ -1,17 +1,15 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React from "react"; 
 import Link from "next/link";
-import { HiOutlineDocumentText } from "react-icons/hi2";
-import { BsSearch, BsBell } from "react-icons/bs";
-import { User } from "@prisma/client";
+import { BsSearch, BsBell, BsFileEarmarkText } from "react-icons/bs";
 import ImageAvatar from "../common/ImageAvatar";
 import UserNavigation from "./UserNavigation";
 import Logo from "../common/Logo";
+import { userProps } from "@/types/types";
 
 interface navBarProps {
-  currentUser: User | null;
+  currentUser: userProps | null; 
 }
 
 const Navbar = ({ currentUser }: navBarProps) => {
@@ -36,36 +34,26 @@ const Navbar = ({ currentUser }: navBarProps) => {
 
   return (
     <nav className="navbar">
+
       <Logo />
 
-      <div
-        className={
-          "absolute bg-white w-full left-0 top-full mt-0.5 border-b border-gray py-4 px-[5vw] md:relative md:inset-0 md:border-0 md:block md:p-0 md:w-auto md:show " +
-          (showSearchBar ? "show" : "hide")
-        }
-      >
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-full md:w-auto bg-grey p-4 pl-6 pr-[12%] md:pr-6 rounded-full placeholder:text-dark-grey md:pl-12"
-        />
+      <div className={"absolute bg-white w-full left-0 top-full mt-0.5 border-b border-gray py-4 px-[5vw] md:relative md:inset-0 md:border-0 md:block md:p-0 md:w-auto md:show " + (showSearchBar ? "show" : "hide")}>
+        <input type="text" placeholder="Search" className="w-full md:w-auto bg-grey p-4 pl-6 pr-[12%] md:pr-6 rounded-full placeholder:text-dark-grey md:pl-12"/>
         <BsSearch className="absolute right-[10%] md:pointer-events-none md:left-5 top-1/2 -translate-y-1/2 text-xl text-dark-grey" />
       </div>
 
       <div className="flex items-center gap-3 md:gap-6 ml-auto">
-        <button
-          className="md:hidden w-12 h-12 flex items-center justify-center rounded-full bg-grey"
-          onClick={toggleSearchBar}
-        >
+        <button className="md:hidden w-12 h-12 flex items-center justify-center rounded-full bg-grey" onClick={toggleSearchBar}>
           <BsSearch className="text-xl text-dark-grey" />
         </button>
 
         <Link href="/editor" className="hidden md:flex gap-2 link rounded-full">
-          <HiOutlineDocumentText className="text-xl" />
+          <BsFileEarmarkText className="text-xl" />
           <p>Write</p>
         </Link>
-        {currentUser ? (
-          <>
+
+        { currentUser ? (
+          <React.Fragment>
             <Link href="/dashboard/notification">
               <button className="w-12 h-12 rounded-full bg-grey relative hover:bg-black/20 flex items-center justify-center">
                 <BsBell size={22} />
@@ -74,15 +62,11 @@ const Navbar = ({ currentUser }: navBarProps) => {
                 )}
               </button>
             </Link>
-            <div
-              className="relative"
-              onClick={toggleUserNavBar}
-              onBlur={handleOnBlur}
-            >
+            <div className="relative" onClick={toggleUserNavBar} onBlur={handleOnBlur}>
               <ImageAvatar image={currentUser.image || ""} />
               {showUserNavbar && <UserNavigation currentUser={currentUser} />}
             </div>
-          </>
+          </React.Fragment>
         ) : (
           <React.Fragment>
             <Link href="/sign-in" className="btn-dark py-2">

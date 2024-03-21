@@ -4,17 +4,35 @@
 import React from 'react'
 import EditorForm from './EditorForm';
 import PublishForm from './PublishForm';
+import { OutputData } from '@editorjs/editorjs';
 
-interface Props {
-  
+export interface blogProps {
+  title:string
+  banner: { public_id: string, secure_url: string }
+  tags: string[]
+  description: string
+  content: OutputData
+  draft: boolean
 }
 
-const EditorClient = (props: Props) => {
+const EditorClient = () => {
   const [displayPage, setDisplayPage] = React.useState('editor');
+  const initialBlogData = {
+    title: '',
+    banner: { public_id: '', secure_url: '' },
+    description: '',
+    tags: [],
+    content: { blocks: [] },
+    draft: false
+  }
+  const [blogData, setBlogData] = React.useState<blogProps>(initialBlogData);
 
   return (
     <div>
-      { displayPage === 'editor' ? <EditorForm/> : <PublishForm/> }
+      { displayPage === 'editor' ? 
+        <EditorForm blogData={blogData} setBlogData={setBlogData} setDisplayPage={setDisplayPage} /> : 
+        <PublishForm blogData={blogData} setDisplayPage={setDisplayPage} setBlogData={setBlogData} /> 
+      }
     </div>
   )
 }

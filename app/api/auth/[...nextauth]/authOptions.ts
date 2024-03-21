@@ -1,14 +1,15 @@
-import { PrismaAdapter } from '@auth/prisma-adapter'
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import Credentials from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { loginUserValidation } from '@/libs/utils/validationSchemas'
-import { prismaClient } from '@/libs/utils/connectDatabase'
 import { getUserByEmail } from '@/libs/actions/data.action'
+import { MongoDBAdapter } from '@auth/mongodb-adapter'
+import clientPromise from '@/libs/utils/mongoDBClient'
 
 export const authOptions:AuthOptions = {
-  adapter: PrismaAdapter(prismaClient) as any,
+  //@ts-ignore 
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -20,6 +21,7 @@ export const authOptions:AuthOptions = {
         email: {label: 'email', type: 'text'},
         password: {label: 'password', type: 'password'}, 
       },
+      //@ts-ignore 
       async authorize(credentials) {
        const validLoginDetails = loginUserValidation.safeParse(credentials);
 
@@ -33,7 +35,6 @@ export const authOptions:AuthOptions = {
         if (passwordMatch) return user;
 
         if (!passwordMatch) throw new Error('Wrong password')
-
 
        }
 
