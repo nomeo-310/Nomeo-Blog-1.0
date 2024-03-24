@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { latestBlogProps } from "./HomeClient";
 import Image from "next/image";
 import { dateGenerator } from "@/hooks/dateGenerator";
 import { BsHeart } from "react-icons/bs";
 import Link from "next/link";
+import { latestBlogProps } from "@/types/types";
 
 const LatestBlogCard = ({ _id, title, author, createdAt, description, tags, likes, banner}: latestBlogProps) => {
   return (
@@ -15,9 +15,8 @@ const LatestBlogCard = ({ _id, title, author, createdAt, description, tags, like
           <div className="w-8 h-8 relative rounded-full border border-grey overflow-hidden">
             <Image src={author?.image ? author.image : "/images/default_user.png"} fill alt="profile_image" className="rounded-full"/>
           </div>
-          <p className="line-clamp-1">
-            {author?.name} {author?.username}
-          </p>
+          <p className="line-clamp-1 hidden md:block">{author?.name} {author?.username}</p>
+          <p className="line-clamp-1 md:hidden">{author?.name}</p>
           <p className="min-w-fit">{dateGenerator(createdAt)}</p>
         </div>
         <p className="blog-title">{title}</p>
@@ -25,7 +24,7 @@ const LatestBlogCard = ({ _id, title, author, createdAt, description, tags, like
           {description}
         </p>
         <div className="flex gap-4 mt-7">
-          <span className="btn-light py-1 px-4">{tags[0]}</span>
+          <span className="tag px-4">{tags[0]}</span>
           <div className="ml-3 flex items-center gap-2 text-dark-grey">
             <BsHeart className="" />
             <p>{likes.length}</p>

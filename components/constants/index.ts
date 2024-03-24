@@ -1,0 +1,28 @@
+export const categories = [
+  "coding",
+  "fashion",
+  "feminism",
+  "society",
+  "tech",
+  "art",
+  "ai",
+  "music",
+  "movies",
+  "motivation",
+  "lifestyle",
+  "adventure",
+  "comic",
+  "health tips",
+  "mental health",
+  "minimalism",
+  "decoration",
+  "food",
+  "engineering",
+  "trends",
+  "spirituality",
+  "romance",
+  "creativity",
+  "craft",
+];
+
+

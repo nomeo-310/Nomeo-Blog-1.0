@@ -44,3 +44,34 @@ export interface blogProps {
   comments: string[],
   draft: boolean,
 }
+
+export interface latestBlogProps {
+  _id: string;
+  description: string;
+  title: string;
+  banner: { public_id: string; secure_url: string };
+  tags: string[];
+  likes: string[];
+  reads: string[];
+  createdAt: string;
+  author: {
+    _id: string;
+    name: string;
+    image: string;
+    profileImage: { public_id: string; secure_url: string };
+    username: string;
+  };
+}
+
+export interface trendingBlogProps {
+  _id: string;
+  title: string;
+  createdAt: string;
+  author: {
+    _id: string;
+    name: string;
+    image: string;
+    profileImage: { public_id: string; secure_url: string };
+    username: string;
+  };
+}

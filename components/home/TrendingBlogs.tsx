@@ -1,7 +1,7 @@
 import React from 'react'
-import { trendingBlogProps } from './HomeClient';
 import AnimationWrapper from '../common/AnimationWrapper'
 import TrendingBlogCard from './TrendingBlogCard';
+import { trendingBlogProps } from '@/types/types';
 
 interface Props {
   trendingBlogs: trendingBlogProps[]

@@ -30,54 +30,17 @@ export const createBlogPost = async({title, banner, description, content, tags, 
   }
 
   const author = postAuthor._id;
+  const newTags = tags.map((tag:string) => tag.toLowerCase());
 
   try {
     connectToDatabase();
-    const blog = await Blog.create({title, banner, description, content, author, tags, draft});
+    const blog = await Blog.create({title, banner, description, content, author, tags:newTags, draft});
     blog.save();
     postAuthor.blogs.push(blog._id)
     { !draft && postAuthor.totalBlogs++ }
     postAuthor.save();
     revalidatePath("/");
     return {success: 'Blogpost successfully created'}
-  } catch (error) {
-    return {error: 'Internal server error'}
-  }
-
-}
-
-export const getLatestBlogPosts = async() => {
-
-  connectToDatabase();
-  const maxLimit = 5;
-
-  try {
-    const blogs = Blog.find({draft: false})
-    .populate('author', 'name image profileImage username')
-    .sort({'createdAt': -1})
-    .select("_id description title banner tags likes createdAt")
-    .limit(maxLimit);
-
-    return blogs
-  } catch (error) {
-    return {error: 'Internal server error'}
-  }
-
-}
-
-export const getTrendingBlogPosts = async() => {
-
-  connectToDatabase();
-  const maxLimit = 5;
-
-  try {
-    const blogs = Blog.find({draft: false})
-    .populate('author', 'name image profileImage username')
-    .sort({'totalReads':-1, 'totalLikes':-1, 'createdAt':-1 })
-    .select("_id title createdAt")
-    .limit(maxLimit);
-
-    return blogs
   } catch (error) {
     return {error: 'Internal server error'}
   }

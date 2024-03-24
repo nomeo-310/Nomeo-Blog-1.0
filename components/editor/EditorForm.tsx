@@ -151,7 +151,7 @@ const EditorForm = ({ blogData, setBlogData, setDisplayPage }: editorProps) => {
               { imageUrl.secure_url ? (
                 <React.Fragment>
                   <Image src={imageUrl.secure_url} alt="main_banner_image" fill className="rounded-lg" />
-                  <div className="mt-4 absolute right-3 bottom-3 z-50 flex items-center gap-4">
+                  <div className="mt-4 absolute right-3 bottom-3 flex items-center gap-4">
                     <button className="btn-light py-2" onClick={handleCancelSelection} >
                       {imageUploaded && blogData.banner.secure_url ? "Change image" : "Cancel"}
                     </button>
