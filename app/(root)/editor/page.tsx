@@ -1,8 +1,9 @@
 import React from "react";
-import { getCurrentUser, getSession } from "../../../libs/actions/data.action";
-import { redirect } from "next/navigation";
+import { getSession } from "../../../libs/actions/data.action";
 import EditorClient from "../../../components/editor/EditorClient";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { fetchCurrentUser } from "@/libs/actions/user.action";
 
 
 export const metadata: Metadata = {
@@ -11,12 +12,13 @@ export const metadata: Metadata = {
 };
 
 const EditorPage = async () => {
-
+  const currentUser = await fetchCurrentUser();
   const session = await getSession();
-  const currentUser = await getCurrentUser();
 
-  if (!session?.user) {
-    redirect("/sign-in");
+  const loggedIn = session && session.user && session.user.email === currentUser.email;
+
+  if (!loggedIn) {
+    redirect("sign-in?next=/editor");
   }
 
   return <EditorClient />;

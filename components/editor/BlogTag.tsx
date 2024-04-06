@@ -18,7 +18,7 @@ const BlogTag = ({tag, blogData, setBlogData, tagIndex}: blogTagProps) => {
   }
 
   return (
-    <div className='relative p-2 mt-2 mr-2 px-5 rounded-full inline-block hover:bg-opacity-50 pr-12 bg-white'>
+    <div className='relative p-2 mt-2 mr-2 px-5 rounded-full inline-block hover:bg-opacity-50 pr-12 bg-white dark:text-black'>
       <p className='outline-none'>{tag}</p>
       <button className='rounded-full absolute right-3 top-1/2 -translate-y-1/2 ' onClick={deleteTags}>
         <BsXLg className='text-sm pointer-events-none '/>

@@ -15,7 +15,7 @@ const LoadMoreData = ({currentData, getMoreBlogs, getMoreCategories, pageState}:
   if (currentData !== null && currentData.blogCount > currentData.data.length) {
     return (
       <button 
-        className='tag bg-black text-white' 
+        className='tag bg-black text-white dark:bg-grey dark:text-black' 
         onClick={pageState === 'home' ? () => getMoreBlogs({page: currentData.page + 1}) : () => getMoreCategories({page: currentData.page + 1})}
       >
         Load more 

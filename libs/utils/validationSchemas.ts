@@ -12,6 +12,11 @@ const loginUserValidation = z.object({
   password: z.string().min(8, {message: 'Password must be atleast 8 characters'})
 });
 
+const changePasswordValidation = z.object({
+  currentpassword: z.string().min(8, {message: 'Password must be atleast 8 characters'}),
+  newpassword: z.string().min(8, {message: 'Password must be atleast 8 characters'})
+})
 
 
-export { createUserValidation, loginUserValidation };
+
+export { createUserValidation, loginUserValidation, changePasswordValidation };

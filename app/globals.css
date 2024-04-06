@@ -3,6 +3,27 @@
 @tailwind utilities;
 
 @layer components {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--lightestgrey); 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  
   * {
     @apply m-0 p-0 box-border text-base outline-purple/30 duration-100;
   }
@@ -12,7 +33,7 @@
   }
 
   body {
-    @apply font-normal text-black;
+    @apply font-normal text-black dark:bg-[#121212];
   }
 
   i {
@@ -20,7 +41,7 @@
   }
 
   section {
-    @apply py-4 px-[5vw] md:px-[7vw] lg:px-[10vw];
+    @apply py-4 px-[5vw] md:px-[6vw] lg:px-[8vw];
   }
 
   ::selection {
@@ -48,11 +69,11 @@
   }
 
   .btn-light {
-    @apply btn-dark bg-grey text-black;
+    @apply btn-dark bg-grey text-black dark:text-white;
   }
 
   .input-box {
-    @apply w-[100%] rounded-md p-4 bg-grey pl-12 border border-grey focus:bg-transparent placeholder:text-black;
+    @apply w-[100%] rounded-md p-4 bg-grey dark:bg-[#343434] pl-12 border border-grey dark:border-[#343434] focus:bg-transparent placeholder:text-black dark:placeholder:text-grey dark:text-white;
   }
 
   .input-error-box {
@@ -65,14 +86,14 @@
   }
 
   .input-icon {
-    @apply absolute left-4 top-1/2 -translate-y-1/2;
+    @apply absolute left-4 top-1/2 -translate-y-1/2 dark:text-white;
   }
   .password-icon {
-    @apply absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer;
+    @apply absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer dark:text-white;
   }
 
   .link {
-    @apply text-dark-grey hover:text-black hover:bg-grey p-3 px-4 block opacity-75;
+    @apply text-dark-grey dark:text-white dark:hover:text-black hover:text-black dark:hover:bg-grey hover:bg-grey p-3 px-4 block opacity-75;
   }
 
   .hide {
@@ -84,21 +105,21 @@
   }
 
   .sidebar-link {
-    @apply flex gap-4 items-center py-5 text-dark-grey hover:text-black;
+    @apply flex gap-4 items-center py-5 text-dark-grey dark:text-white hover:text-black;
   }
 
   .sidebar-link.active {
-    @apply text-black border-r-2 border-black pl-6 bg-grey/50 -ml-6 md:rounded-tl-lg md:rounded-bl-lg max-md:border-none;
+    @apply text-black border-r-2 dark:border-red border-black pl-6 bg-grey -ml-6 md:rounded-tl-lg md:rounded-bl-lg max-md:border-none rounded-lg md:rounded-r-none;
   }
 
   #textEditor h2,
   h2 {
-    @apply text-4xl leading-normal font-bold max-md:text-3xl max-md:leading-snug !important;
+    @apply text-3xl leading-normal font-bold max-md:text-3xl max-md:leading-snug !important;
   }
 
   #textEditor h3,
   h3 {
-    @apply text-3xl leading-loose max-md:text-2xl max-md:leading-normal !important;
+    @apply text-2xl leading-loose max-md:text-2xl max-md:leading-normal !important;
   }
 
   #textEditor *,
@@ -112,7 +133,7 @@
   }
 
   .tag {
-    @apply p-3 bg-grey rounded-full px-6 capitalize;
+    @apply p-3 bg-grey dark:text-black rounded-full px-6 capitalize;
   }
 
   .blog-title {

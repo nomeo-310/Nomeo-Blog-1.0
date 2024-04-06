@@ -7,14 +7,16 @@ import { latestBlogProps } from '@/types/types'
 
 interface Props {
   latestBlogs: latestBlogProps[]
+  currentUserId?: string
 }
 
-const LatestBlogs = ({latestBlogs}:Props) => {
+const LatestBlogs = ({latestBlogs, currentUserId}:Props) => {
+  
   return (
     <React.Fragment>
       { latestBlogs.length > 0 && latestBlogs.map((blog:latestBlogProps, index: number) => (
         <AnimationWrapper key={`blog-${index}`} transition={{duration: 1, delay: index*0.1}}>
-          <LatestBlogCard {...blog}/>
+          <LatestBlogCard {...blog} likedPost={blog.likes.includes(currentUserId!)}/>
         </AnimationWrapper>
         ))
       }

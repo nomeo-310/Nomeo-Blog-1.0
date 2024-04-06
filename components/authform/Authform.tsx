@@ -2,18 +2,17 @@
 
 import React from "react";
 import Input from "../common/Input";
-import { useRouter } from "next/navigation";
-import { BsPerson, BsEnvelope, BsKey } from "react-icons/bs";
+import { useRouter, useSearchParams } from "next/navigation";
+import { BsPerson, BsEnvelope, BsLock } from "react-icons/bs";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserValidation,loginUserValidation } from "@/libs/utils/validationSchemas";
 import Image from "next/image";
 import Link from "next/link";
 import AnimationWrapper from "../common/AnimationWrapper";
-import { createUser } from "@/libs/actions/user.action";
-import { userProps } from "@/types/types";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
+import axios, { AxiosError } from "axios";
 
 interface authFormProps {
   type: "login" | "register";
@@ -21,29 +20,37 @@ interface authFormProps {
 
 const Authform = ({ type }: authFormProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get('next')
 
-  const authFormDefaultData = { email: "", password: "", fullname: "" };
+  const registerDefaultData = { email: "", password: "", fullname: "" };
+  const loginDefaultData = { email: "", password: "" };
 
   const { register, handleSubmit, formState: { errors }} = useForm<FieldValues>({
-    resolver: zodResolver(
-      type === "register" ? createUserValidation : loginUserValidation
-    ),
-    defaultValues: authFormDefaultData,
+    resolver: zodResolver(type === "register" ? createUserValidation : loginUserValidation),
+    defaultValues: type === "register" ? registerDefaultData : loginDefaultData,
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    
     if (type === "register") {
       try {
-        const newdata = await createUser(data as userProps);
-
-        if (newdata.success) {
-          toast.success(newdata.success);
+        const { email, fullname, password } = data;
+        const userData = { email: email, fullname: fullname, password: password }
+        const response = await axios.post('/api/createUser', userData)
+        if (response.status === 200) {
+          toast.success("User successfully created");
           router.push("/sign-in");
-        } else {
-          toast.error(newdata.error);
         }
       } catch (error) {
-        toast.error("Something went wrong");
+        if(error instanceof AxiosError) {
+          if (error?.response?.status === 400) {
+            toast.error(error.response.data);
+          }
+          if (error?.response?.status === 500) {
+            toast.error(error.response.data);
+          }
+        }
       }
     }
 
@@ -52,7 +59,7 @@ const Authform = ({ type }: authFormProps) => {
         if (callback?.ok) {
           toast.success("Succesfull Logged In");
           router.refresh();
-          router.push("/");
+          router.push(next ? next : "/");
         }
 
         if (callback?.error) {
@@ -63,7 +70,10 @@ const Authform = ({ type }: authFormProps) => {
   };
 
   const socialSign = () => {
-    signIn("google");
+    signIn("google", {redirect: false}).then((callback) => {
+      if (callback?.ok) {
+        router.push(next ? next : "/");
+    }});
   };
 
   return (
@@ -74,7 +84,7 @@ const Authform = ({ type }: authFormProps) => {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
-          <h1 className="font-bold text-4xl capitalize text-center mb-16">
+          <h1 className="font-bold text-4xl capitalize text-center mb-16 dark:text-white">
             {type === "login" ? "Welcome back!" : "Create account"}
           </h1>
 
@@ -104,7 +114,7 @@ const Authform = ({ type }: authFormProps) => {
             type="password"
             placeholder="Your password"
             id="password"
-            icon={BsKey}
+            icon={BsLock}
             register={register}
             required
             error={errors.password?.message as string}
@@ -115,9 +125,9 @@ const Authform = ({ type }: authFormProps) => {
           </button>
 
           <div className="relative w-full flex items-center gap-2 my-10 opacity-40 text-black font-bold">
-            <hr className="w-1/2 border-black" />
-            <p className="block">Or</p>
-            <hr className="w-1/2 border-black" />
+            <hr className="w-1/2 border-black dark:border-grey" />
+            <p className="block dark:text-white">Or</p>
+            <hr className="w-1/2 border-black dark:border-grey" />
           </div>
 
           <button
@@ -131,11 +141,11 @@ const Authform = ({ type }: authFormProps) => {
             Continue with google
           </button>
 
-          <p className="mt-6 text-dark-grey text-xl text-center">
+          <p className="mt-6 text-dark-grey text-xl text-center dark:text-white">
             {type === "login" ? "Don't have an account?" : "Already a member?"}
             <Link
               href={type === "login" ? "/sign-up" : "/sign-in"}
-              className="text-xl underline text-black ml-1"
+              className="text-xl underline text-black ml-1 dark:text-grey"
             >
               {type === "login" ? "Create an account" : "Sign in here"}
             </Link>

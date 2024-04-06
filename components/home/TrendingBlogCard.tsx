@@ -14,11 +14,11 @@ export interface trendingBlogCardProps {
 const TrendingBlogCard = ({ trendingBlog, index }: trendingBlogCardProps) => {
   const { _id, title, createdAt, author } = trendingBlog;
   return (
-    <Link href={`/blog/${_id}`} className="flex gap-5 mb-8">
+    <Link href={`/blogs/${_id}`} className="flex gap-5 mb-8">
       <h1 className="blog-index">{index < 10 ? "0" + (index + 1) : index}</h1>
-      <div>
+      <div className="dark:text-white">
         <div className="flex gap-2 items-center mb-7">
-          <div className="w-8 h-8 relative rounded-full border border-grey overflow-hidden">
+          <div className="w-8 h-8 relative rounded-full border border-grey dark:border-0 overflow-hidden">
             <Image src={author?.image ? author.image : "/images/default_user.png"} fill alt="profile_image" className="rounded-full"/>
           </div>
           <p className="line-clamp-1">{author?.name}</p>

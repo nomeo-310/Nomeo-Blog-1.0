@@ -15,7 +15,7 @@ const SignInPage = async () => {
   if (session?.user) {
     redirect("/");
   }
-
+  
   return (
     <div>
       <Authform type="login" />

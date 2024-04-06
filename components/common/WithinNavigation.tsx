@@ -7,7 +7,7 @@ export interface withinPageProps {
   defaultActiveIndex: number
   defaultHidden: string[]
   children: React.ReactNode
-  width: string | undefined
+  width?: string | undefined
 }
 
 export let activeTabRef:any;
@@ -36,9 +36,9 @@ const WithinPageNavigation = ({routes, defaultActiveIndex, defaultHidden, childr
 
   return (
     <React.Fragment>
-      <div className="relative mb-8 bg-white border-b border-grey flex flex-nowrap overflow-x-auto">
+      <div className="relative mb-8 bg-white border-b dark:bg-[#121212] border-grey flex flex-nowrap overflow-x-auto">
         { routes.map((route:string, index:number) => (
-            <button key={route} className={'p-4 capitalize px-5 ' + (inPageIndex === index ? 'text-black' : 'text-black/30 ') + (defaultHidden.includes(route) ? 'md:hidden' : '')} onClick={(e:React.MouseEvent<HTMLButtonElement>) => {changePageState(e.target, index)}} ref={index === defaultActiveIndex ? activeTabRef : null}>
+            <button key={route} className={'p-4 capitalize px-5 dark:text-white ' + (inPageIndex === index ? 'text-black' : 'text-black/30 ') + (defaultHidden.includes(route) ? 'md:hidden' : '')} onClick={(e:React.MouseEvent<HTMLButtonElement>) => {changePageState(e.target, index)}} ref={index === defaultActiveIndex ? activeTabRef : null}>
               {route}
             </button>
           ))

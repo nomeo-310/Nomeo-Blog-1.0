@@ -15,9 +15,10 @@ export interface inputProps {
   required: boolean;
   register: UseFormRegister<FieldValues>;
   error?: string;
+  value?:string
 }
 
-const Input = ({type, id, placeholder, icon: Icon, register, required, error }: inputProps) => {
+const Input = ({type, id, placeholder, icon: Icon, register, required, error, value }: inputProps) => {
   const [passwordType, setPasswordType] = React.useState("password");
   return (
     <div className="mb-3">
@@ -29,6 +30,7 @@ const Input = ({type, id, placeholder, icon: Icon, register, required, error }: 
           placeholder={placeholder}
           {...register(id, { required })}
           autoComplete={id}
+          value={value}
         />
         <Icon size={22} className="input-icon" />
         {type === "password" && (

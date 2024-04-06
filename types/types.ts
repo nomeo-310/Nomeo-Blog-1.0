@@ -1,16 +1,11 @@
 import { OutputData } from "@editorjs/editorjs"
 
-export interface userProps {
-  email:string
-  fullname:string
-  password:string
-}
 export interface signUserProps {
   email:string
   password:string
 }
 
-export interface userProps {
+export type userProps =  {
   _id: string
   name: string,
   email: string,
@@ -28,6 +23,11 @@ export interface userProps {
   blogs: string[],
   readBlogs: string[],
   likedBlogs: string[]
+  totalBlogs: number
+  totalLikedBlogs: number
+  totalReads: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface blogProps {
@@ -51,8 +51,10 @@ export interface latestBlogProps {
   title: string;
   banner: { public_id: string; secure_url: string };
   tags: string[];
+  totalReads: number
+  totalComments: number
+  totalLikes: number
   likes: string[];
-  reads: string[];
   createdAt: string;
   author: {
     _id: string;

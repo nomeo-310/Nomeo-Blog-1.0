@@ -8,6 +8,8 @@ import { uploadImage } from "./uploadImage";
 import Embed from '@editorjs/embed'
 // @ts-ignore:
 import FontSize from 'editorjs-inline-font-size-tool';
+// @ts-ignore:
+import List from '@editorjs/list'
 
 const uploadImageByURL = (e: any) => {
   let link = new Promise((resolve, reject) => {
@@ -38,7 +40,7 @@ const uploadImageByFile = async(e:File) => {
  
 export var tools = {
   fontSize: FontSize,
-  embed: Embed,
+  embed: { class: Embed, inlineToolbar: true },
   image: {class: Image, inlineToolbar: true, config: {
     uploader: {
       uploadByUrl: uploadImageByURL,
@@ -48,8 +50,9 @@ export var tools = {
   header: { class: Header, config: {
     placeholder: 'Type and header here...',
     levels: [2, 3],
-    defaultLevel: 2
+    defaultLevel: 3
   }, inlineToolbar: true},
-  quote: { class: Quote, inlineToolbar: true }
+  quote: { class: Quote, inlineToolbar: true },
+  list: { class: List, inlineToolbar: true }
 }
 

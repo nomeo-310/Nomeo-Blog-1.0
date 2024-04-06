@@ -28,6 +28,7 @@ export const authOptions:AuthOptions = {
        if (validLoginDetails.success) {
         const { email, password } = validLoginDetails.data;
 
+
         const user = await getUserByEmail(email);
         if (!user || !user.hashedPassword)   throw new Error('Invalid credentials')
         const passwordMatch = await bcrypt.compare(password, user.hashedPassword)

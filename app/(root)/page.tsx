@@ -1,7 +1,8 @@
 import React from "react";
-import MainNavigation from "@/app/app-components/Navigation";
 import HomeClient from "@/components/home/HomeClient";
 import { Metadata } from "next";
+import MainNavigation from "../app-components/Navigation";
+import { getCurrentUser } from "@/libs/actions/data.action";
 
 export const metadata: Metadata = {
   title: "Nomeo Blog 1.0 | Home",
@@ -9,11 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const currentUser = await getCurrentUser();
+  const plainCurrentUser = JSON.parse(JSON.stringify(currentUser ));
 
   return (
     <React.Fragment>
       <MainNavigation />
-      <HomeClient />
+      <HomeClient currentUserId={plainCurrentUser?._id} />
     </React.Fragment>
   );
 }

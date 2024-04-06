@@ -2,9 +2,9 @@
 
 import { PuffLoader } from "react-spinners"
 
-const Loader = () => {
+const Loader = ({fullScreen}: {fullScreen?: boolean}) => {
   return (
-    <div className="h-[70vh] flex flex-col justify-center items-center">
+    <div className={(fullScreen ? "h-screen" : "h-cover") + " flex flex-col justify-center items-center"}>
       <PuffLoader size={80} color={'grey'} />
     </div>
   )
