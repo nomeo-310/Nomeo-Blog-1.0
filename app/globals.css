@@ -77,7 +77,7 @@
   }
 
   .input-error-box {
-    @apply w-[100%] rounded-md p-4 bg-red/25 pl-12 border border-red focus:bg-red/25 focus:border-red placeholder:text-black outline-none;
+    @apply w-[100%] rounded-md p-4 bg-red/25 pl-12 border border-red focus:bg-red/25 focus:border-red placeholder:text-black dark:placeholder:text-grey outline-none dark:text-white;
   }
 
   input:disabled,

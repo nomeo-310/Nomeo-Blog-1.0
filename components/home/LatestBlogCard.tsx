@@ -46,7 +46,7 @@ const LatestBlogCard = ({ _id, title, author, createdAt, description, tags, like
           {description}
         </p>
         <div className="flex gap-4 mt-7">
-          <span className="tag px-4">{tags[0]}</span>
+          <span className="tag px-4 line-clamp-1">{tags[0]}</span>
           <div className="ml-3 flex items-center gap-2 text-dark-grey">
             {likedPost ? <BsHeartFill className="text-red"/> : <BsHeart className="" />}
             <p>{likes && likes.length}</p>
